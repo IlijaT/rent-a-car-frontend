@@ -1,11 +1,26 @@
 <template>
     <v-container>
-      <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md6>
-          <h2 class="grey--text">Add a new car</h2>
+      <v-layout row v-if= "loading">
+        <v-flex xs12 >
+            <div class="text-xs-center">
+              <v-progress-circular
+                :width="10"
+                :size="80"
+                color="grey darken-1"
+                indeterminate
+                v-if="loading"
+              ></v-progress-circular>
+            </div>
         </v-flex>
       </v-layout>
-      <v-layout align-center justify-center class="mt-3">
+
+      <v-layout align-center justify-center v-if="error">
+          <v-flex xs12 sm8 md6>
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+          </v-flex>
+      </v-layout>
+
+      <v-layout v-if="!loading" align-center justify-center class="mt-3">
         <v-flex xs12 sm8 md6>
           <v-card class="elevation-12">
             <v-card-text>
@@ -18,8 +33,21 @@
                 <span class="red--text">{{ errors.first('year') }}</span>
                 <v-text-field v-validate="'required|numeric'" v-model= "car.consuming" prepend-icon="local_gas_station" name="consuming" label="Consuming" type="text"></v-text-field>
                 <span class="red--text">{{ errors.first('consuming') }}</span>
-                <v-text-field v-validate="'required'" v-model="car.imageURL" prepend-icon="add_photo_alternate" name="imageURL" label="Image URL" type="text"></v-text-field>
-                <span class="red--text">{{ errors.first('imageURL') }}</span>
+                <v-btn
+                  color="blue-grey"
+                  class="white--text"
+                  @click.native= "pickFile"
+                >
+                  Upload image
+                  <v-icon right dark>cloud_upload</v-icon>
+                </v-btn>
+                <input name="image" @change="processFile($event)" style="display: none" type="file" ref="inputFile" accept="image/*"> 
+                <!-- <span class="red--text">{{ errors.first('imageURL') }}</span> -->
+                <v-layout align-center justify-center class="mt-3">
+                  <v-flex xs12 sm8 md6>
+                    <img :src="imageURL" height="150">
+                  </v-flex> 
+                </v-layout>
                 <v-textarea v-validate="'required'" v-model= "car.description" prepend-icon="description" name="description" label="Car description" type="text"></v-textarea>
                 <span class="red--text">{{ errors.first('description') }}</span>
                 <v-btn :disabled= "!curentUser" type="submit" dark color="grey darken-1">Save</v-btn>
@@ -42,30 +70,53 @@ export default {
         registration: '',
         year: '',
         consuming: '',
-        imageURL: '',
         description: '',
-        company_id: ''
+        company_id: '',
+        image: null
       },
-      curentUser: null
+      curentUser: null,
+      imageURL: '',
     }
+  },
+  computed : {
+    error() {
+        return this.$store.getters.error;
+    },
+    loading () {
+        return this.$store.getters.loading
+      }
   },
   methods: {
     createCar(){
       if (this.curentUser === null) {
         return;
       }
-       
-      this.$validator.validate().then( () => {
+      this.$validator.validate().then(() => {
         this.car.company_id = this.curentUser[0].company_id;
           carService.addCar(this.car);
-          
-          this.$router.push('/cars');
       });
-      
+    },
+    pickFile() {
+      this.$refs.inputFile.click();
+    },
+    processFile(event) {
+      let fileName = event.target.files[0].name;
+      if(fileName.lastIndexOf(".") <= 0) {
+        alert("Please enter a valid file!");
+      }
+      this.car.image = event.target.files[0];
+      let fileReader = new FileReader();
+      fileReader.readAsDataURL(event.target.files[0]);
+      fileReader.addEventListener('load', () => {
+        this.imageURL = fileReader.result;
+      });
+    },
+    onDismissed() {
+      this.$store.dispatch('clearError');
     }
   },
   created () {
-        this.curentUser = this.$store.getters.currentUser;
+      this.curentUser = this.$store.getters.currentUser;
   }
 }
 </script>

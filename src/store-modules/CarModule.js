@@ -16,27 +16,35 @@ const CarModule = {
           return car.registration === payload.registration;
         });
 
-
         carForUpdate.model =  payload.model;
         carForUpdate.available =  payload.available;
         carForUpdate.registration =  payload.registration;
         carForUpdate.year =  payload.year;
         carForUpdate.consuming =  payload.consuming;
-        carForUpdate.imageURL =  payload.imageURL;
+        carForUpdate.image =  payload.image;
         carForUpdate.description =  payload.description;
+      },
+
+      deleteCar(state, id) {
+        state.cars = state.cars.filter(function (car) {
+          return car.id != id;
+      });
       }
-       
-      
     },
     actions: {
       createCar(context, payload) {
-        context.commit('createCar', payload);
+        payload.image = payload.imageURL;
+        payload.imageURL = '';
+        context.commit('createCar', payload.data);
       },
       setCars(context, payload) {
         context.commit('setCars', payload);
       },
       updateCar(context, payload) {
         context.commit('updateCar', payload);
+      },
+      deleteCar(context, id) {
+         context.commit('deleteCar', id);
       }
     },
     getters: {

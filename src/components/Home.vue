@@ -21,7 +21,7 @@
               <v-carousel-item
                 v-for="car in cars"
                 :key="car.id"
-                :src="car.image"
+                :src="'http://localhost:8000/storage/images/' + car.image"
                 @click.native= "selectedCar(car.id)"
               >
               </v-carousel-item>
@@ -48,16 +48,12 @@ import back from '../components/Back.vue';
       loading () {
         return this.$store.getters.loading
       }
-
     },
     methods:  {
       selectedCar(id) {
         this.$router.push(`/cars/${id}`);
       },
-
-    
     }
-     
   }
 </script>
 

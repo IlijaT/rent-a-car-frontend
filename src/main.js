@@ -12,6 +12,7 @@ import VeeValidate from 'vee-validate';
 
 Vue.use(VeeValidate);
 Vue.use(Vuetify);
+Vue.use(router);
 
 Vue.component('alert-component', AlertComponent)
 Vue.component('edit-car-dialog', EditCarDialog)

@@ -52,7 +52,6 @@
 import { auth } from '../../services/authService';
 
   export default {
-
     data () {
       return {
         user: {
@@ -66,7 +65,6 @@ import { auth } from '../../services/authService';
       login() {
        auth.login(this.user);
       },
-
       onDismissed() {
         this.$store.dispatch('clearError');
       }
