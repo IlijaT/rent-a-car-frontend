@@ -15,11 +15,31 @@
           </v-flex>
         </v-layout>
 
-        <v-layout row v-if="error">
+        <!-- <v-layout row v-if="error">
           <v-flex xs12 sm6 offset-sm3>
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
+        <v-snackbar v-if= "error"
+            v-model="snackbar"
+            auto-height
+            :bottom="y === 'bottom'"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :right="x === 'right'"
+            :timeout = 0
+            :top="y === 'top'"
+            :vertical="mode === 'vertical'"
+            >
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+            <v-btn
+                color="pink"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
 
         <v-layout row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
@@ -71,7 +91,11 @@ import { auth } from '../../services/authService';
           password: '',
           password_confirmation: ''
         },
-        passwordConfirm: ''
+        passwordConfirm: '',
+        snackbar: false,
+        y: 'top',
+        x: null,
+        mode: '',
       }
     },
 
@@ -81,6 +105,7 @@ import { auth } from '../../services/authService';
       },
 
       onDismissed() {
+        this.snackbar = false;
         this.$store.dispatch('clearError');
       }
     },
@@ -92,7 +117,10 @@ import { auth } from '../../services/authService';
         return this.$store.getters.currentUser;
       },
       error() {
-        return this.$store.getters.error;
+        if(this.$store.getters.error){
+              this.snackbar = true;
+              return this.$store.getters.error;
+          }
       },
       loading() {
         return this.$store.getters.loading;

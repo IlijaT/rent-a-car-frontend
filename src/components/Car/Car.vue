@@ -92,11 +92,10 @@ export default {
      data () {
       return {
         snackbar: false,
-        y: 'top',
+        y: '500',
         x: null,
         mode: '',
-        timeout: 6000,
-        text: 'Hello, I\'m a snackbar'
+        timeout: 6000
       }
     },
     methods: {

@@ -15,18 +15,38 @@
           </v-flex>
         </v-layout>
 
-        <v-layout row v-if= "error">
+        <!-- <v-layout row v-if= "error">
           <v-flex xs12 sm6 offset-sm3>
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
+         <v-snackbar v-if= "error"
+            v-model="snackbar"
+            auto-height
+            :bottom="y === 'bottom'"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :right="x === 'right'"
+            :timeout = 0
+            :top="y === 'top'"
+            :vertical="mode === 'vertical'"
+            >
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+            <v-btn
+                color="pink"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
 
         <v-layout row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
             <v-card class="elevation-12">
               <v-card-text>
                 <v-form @submit.prevent = "login" method="POST">
-                  <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text"></v-text-field>
+                  <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text" required></v-text-field>
                   <v-text-field prepend-icon="lock" v-model="user.password" name="password" label="Password" type="password"></v-text-field>
                   <v-btn 
                   type="submit" 
@@ -58,6 +78,11 @@ import { auth } from '../../services/authService';
           email: '',
           password: ''
         },
+
+        snackbar: false,
+        y: 'top',
+        x: null,
+        mode: '',
       }
     },
 
@@ -66,13 +91,17 @@ import { auth } from '../../services/authService';
        auth.login(this.user);
       },
       onDismissed() {
+        this.snackbar = false;
         this.$store.dispatch('clearError');
       }
     },
 
     computed: {
       error() {
-        return this.$store.getters.error;
+        if(this.$store.getters.error){
+              this.snackbar = true;
+              return this.$store.getters.error;
+          }
       },
 
       loading() {
