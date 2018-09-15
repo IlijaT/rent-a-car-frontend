@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-layout row v-if= "loading">
+        <v-layout row v-if="loading">
           <v-flex xs12 >
              <div class="text-xs-center">
                 <v-progress-circular
@@ -14,44 +14,71 @@
           </v-flex>
         </v-layout>
 
-        <v-layout row wrap v-else>
-            <v-flex xs12>
-                <v-card class="mt-3 elevation-20">
+        <!-- <v-layout row v-if= "error">
+          <v-flex xs12 sm10 offset-sm1>
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+          </v-flex>
+        </v-layout> -->
+         <v-snackbar
+            v-model="snackbar"
+            :bottom="y === 'bottom'"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :right="x === 'right'"
+            :timeout="timeout"
+            :top="y === 'top'"
+            :vertical="mode === 'vertical'"
+            >
+            {{ error ? error.response.data.message : '' }}
+            <v-btn
+                color="pink"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
+
+        <v-layout row wrap v-if="!loading">
+            <v-flex xs12 sm10 offset-sm1>
+                <v-card class="rounded-card mt-3 elevation-6">
                     <v-card-media
-                    class="white--text"
+                    class="rounded-image white--text"
                     height="400px"
-                    :src="car.image"
+                    :src="'http://localhost:8000/storage/images/' + car.image"
                     >
                     <v-container fill-height fluid>
                         <v-layout fill-height>
-                        <v-flex xs12 align-end flexbox>
-                           <span class="headline">{{car.model}}</span>
-                        </v-flex>
+                            <v-flex xs12 align-end flexbox>
+                                <span class="headline"> 
+                                    <v-btn dark  class="grey darken-2" large v-if="!canUserEdit" 
+                                        @click="rent()"
+                                        >
+                                        <v-icon left>directions</v-icon>
+                                        Rent
+                                    </v-btn>
+                                </span>
+                            </v-flex>
                         </v-layout>
                     </v-container>
                     </v-card-media>
-                    <v-card-title>
+                    <v-card-title class="ma-0">
                         <div>
-                            <span class="grey--text">Model: {{car.model}}</span><br>
+                            <span class="grey--text"> <h3>Model: {{car.model}}</h3></span>
                             <span class="grey--text">Year: {{car.year}}</span><br>
                             <span class="grey--text">Available: {{car.available}}</span><br>
+                            <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
+                            <span class="grey--text">Description: {{car.description}}</span><br>
                         </div>
-                        <template v-if="canUserEdit"> 
-                            <v-spacer></v-spacer>
-                            <edit-car-dialog :car="car"></edit-car-dialog>
-                        </template>
                     </v-card-title>
-                    
-                    <v-card-actions>
-                        <v-btn v-for = "button in buttons"
-                        :key="button.title"
-                        dark
-                        :color="button.color"
-                        :to="button.link"
-                        >
-                        <v-icon left>{{button.icon}}</v-icon>
-                        {{button.title}}
-                        </v-btn>
+                    <v-card-actions v-if="canUserEdit">
+                            <span>
+                                <v-btn color="grey darken-1" dark @click="deleteCar(car.id)">
+                                    <v-icon left>delete</v-icon>
+                                    Delete
+                                </v-btn>
+                            </span>
+                            <span><edit-car-dialog :car="car"></edit-car-dialog></span>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -62,6 +89,34 @@
 <script>
 import { carService } from '../../services/carService';
 export default {
+     data () {
+      return {
+        snackbar: false,
+        y: 'top',
+        x: null,
+        mode: '',
+        timeout: 6000,
+        text: 'Hello, I\'m a snackbar'
+      }
+    },
+    methods: {
+        deleteCar(id){
+            carService.deleteCar(id);
+        },
+        onDismissed() {
+            this.snackbar = false;
+            this.$store.dispatch('clearError');
+            
+        },
+        rent() {
+            if (!this.isUserauthenticated) {
+             this.$router.push('/login')
+            } else {
+                // ovde treba dodati logiku za rentiranje
+                console.log('rentred')
+            }
+        }
+    },
     
     computed: {
        car () {
@@ -72,24 +127,12 @@ export default {
       loading () {
         return this.$store.getters.loading
       },
-
-      buttons () {
-        let buttonsToDisplay = [
-            {icon: 'airline_seat_recline_extra', title: 'Rent', link: '/', color: 'pink lighten-2'}
-        ];
-
-        if (this.isUserauthenticated) {
-            buttonsToDisplay = [];
-            if(this.canUserEdit) {
-                buttonsToDisplay = [
-                    {icon: 'delete', title: 'Delete', link: '/', color: 'red darken-4'},
-                ]
-            }
-           
-        };
-
-        return buttonsToDisplay;
-    },
+      error() {
+          if(this.$store.getters.error){
+              this.snackbar = true;
+              return this.$store.getters.error;
+          }
+      },
 
     isUserauthenticated() {
        return this.$store.getters.currentUser !== null && this.$store.getters.currentUser !== undefined;
@@ -98,9 +141,21 @@ export default {
         if (!this.isUserauthenticated) {
             return
         }
-        return this.$store.getters.currentUser[0].company_id === this.car.company_id
+        return this.$store.getters.currentUser[0].company_id == this.car.company_id
     }
     }
 }
 </script>
+
+<style scoped>
+.rounded-card{
+    border-radius:10px;
+}
+
+.rounded-image{
+    border-radius:10px 10px 0px 0px;
+    margin: 0px;
+}
+
+</style>
 

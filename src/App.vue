@@ -57,6 +57,7 @@
           Loguot
       </v-btn>
     </v-toolbar-items>
+    
    </v-toolbar> 
    <main>
     <router-view></router-view>
@@ -69,28 +70,34 @@
  
 export default {
   name: 'App',
-  components: {
-     
-  },
   data() {
     return {
       sideNav: null,
+      loggedUser: this.$store.getters.currentUser,
     }
   },
   computed: {
     menuItems () {
+       
       let menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
         {icon: 'lock_open', title: 'Login', link: '/login'},
         {icon: 'supervisor_account', title: 'Register', link: '/register'}
       ];
 
-      if (this.isUserauthenticated) {
+      if (this.isUserauthenticated && this.$store.getters.currentUser[0].role_id !== 1) {
         menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
         {icon: 'home', title: 'Companies', link: '/companies'},
         {icon: 'person', title: 'Profile', link: '/profile'},
         {icon: 'directions_car', title: 'NewCar', link: '/newcar'}
+        ]
+      };
+
+      if (this.isUserauthenticated && this.$store.getters.currentUser[0].role_id === 1) {
+        menuItems = [
+        {icon: 'directions_car', title: 'Cars', link: '/cars'},
+        {icon: 'home', title: 'Companies', link: '/companies'},
         ]
       };
 
@@ -102,16 +109,11 @@ export default {
     }
 
   },
-  props: {
-      source: String
-  },
   methods: {
      onLogout () {
         this.$router.push('/')
         this.$store.dispatch('logout');
      }
   },
-   
-   
 };
 </script>
