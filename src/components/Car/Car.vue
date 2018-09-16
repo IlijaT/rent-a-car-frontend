@@ -19,19 +19,19 @@
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
         </v-layout> -->
-         <v-snackbar
+         <v-snackbar class="mb-5" v-if= "error"
             v-model="snackbar"
-            :bottom="y === 'bottom'"
-            :left="x === 'left'"
+            auto-height
+            color="red"
             :multi-line="mode === 'multi-line'"
-            :right="x === 'right'"
-            :timeout="timeout"
-            :top="y === 'top'"
+            :timeout = 0
+            top
+            absolute
             :vertical="mode === 'vertical'"
             >
-            {{ error ? error.response.data.message : '' }}
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
             <v-btn
-                color="pink"
+                color="black"
                 flat
                 @click="onDismissed"
             >
@@ -92,11 +92,10 @@ export default {
      data () {
       return {
         snackbar: false,
-        y: 'top',
+        y: '500',
         x: null,
         mode: '',
-        timeout: 6000,
-        text: 'Hello, I\'m a snackbar'
+        timeout: 6000
       }
     },
     methods: {
@@ -106,7 +105,6 @@ export default {
         onDismissed() {
             this.snackbar = false;
             this.$store.dispatch('clearError');
-            
         },
         rent() {
             if (!this.isUserauthenticated) {
@@ -129,8 +127,8 @@ export default {
       },
       error() {
           if(this.$store.getters.error){
-              this.snackbar = true;
-              return this.$store.getters.error;
+            this.snackbar = true;
+            return this.$store.getters.error;
           }
       },
 

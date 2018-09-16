@@ -31,11 +31,10 @@ export default class CarService {
         store.dispatch('setLoadingFalse');
         router.push('/')
       })
-      .catch((error) => {
-        
+      .catch(error => {
         store.dispatch('setLoadingFalse');
-        store.dispatch('setError', error.response.data.errors);
-    });
+        store.dispatch('setError', error.response.data.errors)
+      });
   }
 
   getCars() {

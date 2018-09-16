@@ -15,18 +15,36 @@
           </v-flex>
         </v-layout>
 
-        <v-layout row v-if= "error">
+        <!-- <v-layout row v-if= "error">
           <v-flex xs12 sm6 offset-sm3>
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
+         <v-snackbar class="mb-5" v-if= "error"
+            v-model="snackbar"
+            auto-height
+            color="red"
+            multi-line 
+            :timeout = 0
+            top
+            absolute
+            >
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+            <v-btn
+                color="black"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
 
-        <v-layout row v-if= "!loading">
+        <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
-            <v-card class="elevation-12">
+            <v-card class="elevation-6">
               <v-card-text>
                 <v-form @submit.prevent = "login" method="POST">
-                  <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text"></v-text-field>
+                  <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text" required></v-text-field>
                   <v-text-field prepend-icon="lock" v-model="user.password" name="password" label="Password" type="password"></v-text-field>
                   <v-btn 
                   type="submit" 
@@ -58,6 +76,9 @@ import { auth } from '../../services/authService';
           email: '',
           password: ''
         },
+
+        snackbar: false,
+        mode: '',
       }
     },
 
@@ -66,13 +87,17 @@ import { auth } from '../../services/authService';
        auth.login(this.user);
       },
       onDismissed() {
+        this.snackbar = false;
         this.$store.dispatch('clearError');
       }
     },
 
     computed: {
       error() {
-        return this.$store.getters.error;
+        if(this.$store.getters.error){
+            this.snackbar = true;
+            return this.$store.getters.error;
+          }
       },
 
       loading() {

@@ -15,15 +15,34 @@
           </v-flex>
         </v-layout>
 
-        <v-layout row v-if="error">
+        <!-- <v-layout row v-if="error">
           <v-flex xs12 sm6 offset-sm3>
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
-        </v-layout>
+        </v-layout> -->
+        <v-snackbar class="mb-5" v-if= "error"
+            v-model="snackbar"
+            auto-height
+            color="red"
+            multi-line 
+            :timeout = 0
+            top
+            style="top: 0px"
+            absolute
+            >
+            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
+            <v-btn
+                color="black"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
 
-        <v-layout row v-if= "!loading">
+        <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
-            <v-card class="elevation-12">
+            <v-card class="elevation-6">
               <v-card-text>
                 <v-form @submit.prevent = "register" method="POST" >
                   <v-text-field prepend-icon="person" v-model= "user.name"  name="name" label="Name" type="text"></v-text-field>
@@ -71,7 +90,9 @@ import { auth } from '../../services/authService';
           password: '',
           password_confirmation: ''
         },
-        passwordConfirm: ''
+        passwordConfirm: '',
+        snackbar: false,
+        mode: '',
       }
     },
 
@@ -81,6 +102,7 @@ import { auth } from '../../services/authService';
       },
 
       onDismissed() {
+        this.snackbar = false;
         this.$store.dispatch('clearError');
       }
     },
@@ -92,7 +114,10 @@ import { auth } from '../../services/authService';
         return this.$store.getters.currentUser;
       },
       error() {
-        return this.$store.getters.error;
+        if(this.$store.getters.error){
+              this.snackbar = true;
+              return this.$store.getters.error;
+          }
       },
       loading() {
         return this.$store.getters.loading;
