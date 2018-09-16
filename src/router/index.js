@@ -9,6 +9,9 @@ import NewCar from '../components/Car/NewCar';
 import RentCar from '../components/Car/RentCar';
 import AuthGuard from './auth-guard'
 import CustomerGuard from './customer-guard'
+import Companies from '../components/Company/Companies';
+import CompanyCars from '../components/Company/CompanyCars';
+import NewCompany from '../components/Company/NewCompany';
 
 
 Vue.use(Router);
@@ -51,6 +54,24 @@ export default new Router({
         path: '/cars/:id',
         name: 'car',
         component: Car,
+        
+      },
+      {
+        path: '/companies',
+        name: 'companies',
+        component: Companies,
+        
+      },
+      {
+        path: '/companies/:id/cars',
+        name: 'companyCars',
+        component: CompanyCars,
+      },
+      {
+        path: '/newCompany',
+        name: 'newCompany',
+        component: NewCompany,
+        beforeEnter: AuthGuard
         
       },
       {

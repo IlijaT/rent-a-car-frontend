@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-layout row justify-center>
-        <v-dialog v-model = "dialog" persistent max-width="290" @keydown.esc="cancelFilterModal">
+        <v-dialog v-model = "dialog" persistent max-width="360" @keydown.esc="cancelFilterModal">
             <v-btn slot="activator" dark color="grey darken-1">
                 <v-icon dark>edit</v-icon>
                 Edit
