@@ -20,20 +20,19 @@
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
           </v-flex>
         </v-layout> -->
-        <v-snackbar v-if= "error"
+        <v-snackbar class="mb-5" v-if= "error"
             v-model="snackbar"
             auto-height
-            :bottom="y === 'bottom'"
-            :left="x === 'left'"
-            :multi-line="mode === 'multi-line'"
-            :right="x === 'right'"
+            color="red"
+            multi-line 
             :timeout = 0
-            :top="y === 'top'"
-            :vertical="mode === 'vertical'"
+            top
+            style="top: 0px"
+            absolute
             >
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
             <v-btn
-                color="pink"
+                color="black"
                 flat
                 @click="onDismissed"
             >
@@ -41,9 +40,9 @@
             </v-btn>
         </v-snackbar>
 
-        <v-layout row v-if= "!loading">
+        <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
-            <v-card class="elevation-12">
+            <v-card class="elevation-6">
               <v-card-text>
                 <v-form @submit.prevent = "register" method="POST" >
                   <v-text-field prepend-icon="person" v-model= "user.name"  name="name" label="Name" type="text"></v-text-field>
@@ -93,8 +92,6 @@ import { auth } from '../../services/authService';
         },
         passwordConfirm: '',
         snackbar: false,
-        y: 'top',
-        x: null,
         mode: '',
       }
     },

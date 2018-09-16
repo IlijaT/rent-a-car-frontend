@@ -14,15 +14,29 @@
         </v-flex>
       </v-layout>
 
-      <v-layout align-center justify-center v-if="error">
-          <v-flex xs12 sm8 md6>
+      <v-snackbar class="mb-5" v-if= "error"
+            v-model="snackbar"
+            auto-height
+            color="red"
+            multi-line 
+            :timeout = 0
+            top
+            style="top: 45px"
+            absolute
+            >
             <alert-component @dismissed="onDismissed" :text="error"></alert-component>
-          </v-flex>
-      </v-layout>
+            <v-btn
+                color="black"
+                flat
+                @click="onDismissed"
+            >
+                Close
+            </v-btn>
+        </v-snackbar>
 
-      <v-layout v-if="!loading" align-center justify-center class="mt-3">
+      <v-layout v-if="!loading" align-center justify-center class="mt-5">
         <v-flex xs12 sm8 md6>
-          <v-card class="elevation-12">
+          <v-card class="elevation-6">
             <v-card-text>
               <v-form @submit.prevent="createCar">
                 <v-text-field v-validate="'required'" autofocus v-model= "car.model" prepend-icon="directions_car" name="model" label="Model" type="text"></v-text-field>
@@ -44,8 +58,8 @@
                 <input name="image" @change="processFile($event)" style="display: none" type="file" ref="inputFile" accept="image/*"> 
                 <!-- <span class="red--text">{{ errors.first('imageURL') }}</span> -->
                 <v-layout align-center justify-center class="mt-3">
-                  <v-flex xs12 sm8 md6>
-                    <img :src="imageURL" height="150">
+                  <v-flex xs10>
+                      <img class="rounded-card mt-1 elevation-6" :src="imageURL" height="100">
                   </v-flex> 
                 </v-layout>
                 <v-textarea v-validate="'required'" v-model= "car.description" prepend-icon="description" name="description" label="Car description" type="text"></v-textarea>
@@ -80,7 +94,10 @@ export default {
   },
   computed : {
     error() {
+      if(this.$store.getters.error){
+        this.snackbar = true;
         return this.$store.getters.error;
+      }
     },
     loading () {
         return this.$store.getters.loading
@@ -112,6 +129,7 @@ export default {
       });
     },
     onDismissed() {
+      this.snackbar = false;
       this.$store.dispatch('clearError');
     }
   },
@@ -120,3 +138,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.rounded-card{
+    border-radius:10px;
+}
+
+
+</style>
