@@ -1,19 +1,44 @@
 const CompanyModule = {
     state: {
-      companies: [
-        {name: 'Opel Astra (2016)', address: 'Hadzi Ruvimova 33, Novi Sad', phone: '021 22-525', id: '1'}
-      ]
+      companies: []
     },
     mutations: {
+      setCompanies(state, payload) {
+        state.companies = payload
+      },
       createCompany(state, payload) {
         state.companies.push(payload);
-      }
-       
+      },
+      updateCompany(state, payload) {
+        let companyForUpdate = state.companies.find( company => {
+          return company.id === payload.id;
+        });
+
+        
+        companyForUpdate.name =  payload.name;
+        companyForUpdate.address =  payload.address;
+        companyForUpdate.phone =  payload.phone;
+     
+      },
+      deleteCompany(state, id) {
+        state.companies = state.companies.filter(function (company) { 
+          return company.id != id;
+        });
+      },
     },
     actions: {
+      setCompanies(context, payload) {
+        context.commit('setCompanies', payload);
+      },
       createCompany(context, payload) {
         context.commit('createCompany', payload);
-      }
+      },
+      updateCompany (context, payload) {
+        context.commit('updateCompany', payload);
+      },
+      companyCars(url) {
+        companyService.getCompanyCars(url);
+     }
     },
     getters: {
       getCompanies: state => {
@@ -24,7 +49,7 @@ const CompanyModule = {
       }
 
     }
-  };
+  }
   
-  export default CompanyModule;
+export default CompanyModule;
   

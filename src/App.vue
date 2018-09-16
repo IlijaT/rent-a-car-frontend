@@ -81,6 +81,7 @@ export default {
        
       let menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
+        {icon: 'home', title: 'Companies', link: '/companies'},
         {icon: 'lock_open', title: 'Login', link: '/login'},
         {icon: 'supervisor_account', title: 'Register', link: '/register'}
       ];
@@ -88,9 +89,10 @@ export default {
       if (this.isUserauthenticated && this.$store.getters.currentUser[0].role_id !== 1) {
         menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
+         {icon: 'directions_car', title: 'New-Car', link: '/newcar'},
         {icon: 'home', title: 'Companies', link: '/companies'},
-        {icon: 'person', title: 'Profile', link: '/profile'},
-        {icon: 'directions_car', title: 'NewCar', link: '/newcar'}
+        {icon: 'home', title: 'New-Company', link: '/newCompany'},
+       
         ]
       };
 

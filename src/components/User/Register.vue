@@ -42,7 +42,7 @@
 
         <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
-            <v-card class="elevation-6">
+            <v-card class="elevation-6 rounded-card">
               <v-card-text>
                 <v-form @submit.prevent = "register" method="POST" >
                   <v-text-field prepend-icon="person" v-model= "user.name"  name="name" label="Name" type="text"></v-text-field>
@@ -136,6 +136,11 @@ import { auth } from '../../services/authService';
 </script>
 
 <style scoped>
+
+.rounded-card{
+    border-radius:10px;
+  }
+
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;
@@ -172,4 +177,6 @@ import { auth } from '../../services/authService';
       transform: rotate(360deg);
     }
   }
+
+  
 </style>

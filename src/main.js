@@ -4,6 +4,7 @@ import store from './store';
 import axios from 'axios'
 import AlertComponent from './components/Shared/Alert.vue';
 import EditCarDialog from './components/Car/Edit/EditCarDialog.vue';
+import EditCompanyDialog from './components/Company/Edit/EditCompanyDialog.vue';
 
 
 import Vuetify from 'vuetify'
@@ -16,7 +17,7 @@ Vue.use(router);
 
 Vue.component('alert-component', AlertComponent)
 Vue.component('edit-car-dialog', EditCarDialog)
-
+Vue.component('edit-company-dialog', EditCompanyDialog)
 
 import 'vuetify/dist/vuetify.min.css'  
 
@@ -36,8 +37,18 @@ new Vue({
           })
           .catch(function (error) {
             store.dispatch('setLoadingFalse');
-            console.log(error);
+            store.dispatch('setError', error);
           });
     this.$store.dispatch('autoSignIn');
+    store.dispatch('setLoadingTrue');
+    axios.get('http://localhost:8000/api/companies')
+          .then(function (response) {
+            store.dispatch('setCompanies', response.data.data);
+            store.dispatch('setLoadingFalse');
+          })
+          .catch(function (error) {
+            store.dispatch('setLoadingFalse');
+            store.dispatch('setError', error);
+          });
   }
 })

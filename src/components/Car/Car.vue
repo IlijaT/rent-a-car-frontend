@@ -121,7 +121,6 @@ export default {
         var id = this.$route.params.id;
         return this.$store.getters.getCarById(id);
       },
-
       loading () {
         return this.$store.getters.loading
       },

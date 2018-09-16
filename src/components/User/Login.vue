@@ -41,7 +41,7 @@
 
         <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
-            <v-card class="elevation-6">
+            <v-card class="rounded-card elevation-6">
               <v-card-text>
                 <v-form @submit.prevent = "login" method="POST">
                   <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text" required></v-text-field>
@@ -124,4 +124,9 @@ import { auth } from '../../services/authService';
     animation: loader 1s infinite;
     display: flex;
   }
+
+  .rounded-card{
+    border-radius:10px;
+  }
+
 </style>
