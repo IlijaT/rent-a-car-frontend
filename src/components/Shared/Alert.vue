@@ -24,7 +24,12 @@
     <div v-if="text.registration" dismissible type="error" @input="onClose" :value="true">
         {{ text.registration[0] }}
     </div>
-    
+    <div v-if="text.address" dismissible type="error" @input="onClose" :value="true">
+        {{ text.address[0] }}
+    </div>
+    <div v-if="text.phone" dismissible type="error" @input="onClose" :value="true">
+        {{ text.phone[0] }}
+    </div>
  </div>   
 </template>
 

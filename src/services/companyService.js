@@ -13,14 +13,8 @@ export default class CompanyService {
     store.dispatch('clearError');
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
-    axios.defaults.headers.common['Content-Type'] = `multipart/form-data`;
-
-    let formData = new FormData()
-        formData.append('id', company.id)
-        formData.append('address', company.address)
-        formData.append('phone', company.phone)
         
-    return axios.post("companies", formData)
+    return axios.post("companies", company)
       .then( (response) => {
         // handle success
         store.dispatch('createCompany', response.data);
