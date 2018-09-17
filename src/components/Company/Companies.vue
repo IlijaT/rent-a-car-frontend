@@ -61,9 +61,7 @@
                                 </v-card-title>
                                 <v-card-actions>
                                     <v-btn dark :to="`/companies/${company.id}/cars`" color="deep-orange darken-2">Cars ({{company.numberOfCars}})</v-btn>
-                                </v-card-actions>
-                                <v-card-actions v-if="canUserEdit">
-                                    <span><edit-company-dialog :company="company"></edit-company-dialog></span>
+                                    <span><edit-company-dialog v-if="canUserEdit" :company="company"></edit-company-dialog></span>
                                 </v-card-actions>
                             </v-flex>
                         </v-layout>
