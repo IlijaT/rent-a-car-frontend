@@ -13,52 +13,73 @@
              </div>
           </v-flex>
         </v-layout>
-        <v-layout row v-else>
-            <v-flex xs12 sm10 offset-sm1>
-                <v-card>
-                    <v-container fluid grid-list-sm>
-                        <v-layout row wrap>
-                            <v-flex v-for="car in cars" :key="car.id" xs4 class="rounded-card elevation-6 mt-1"> 
-                                <v-card-media
-                                    class="rounded-image white--text"
-                                    height="200px"
-                                    :src="'http://localhost:8000/storage/images/' + car.image"
-                                    >
-                                    <!-- <v-container fill-height fluid>
-                                        <v-layout fill-height>
-                                        <v-flex xs12 align-end flexbox>
-                                            <span class="headline">{{car.available}}</span>
-                                        </v-flex>
-                                        </v-layout>
-                                    </v-container> -->
-                                </v-card-media>
-                                <v-card-title>
-                                    <div>
-                                        <span class="grey--text">{{car.model}}</span><br>
-                                        <span class="grey--text">available: {{car.available == "available" ? "yes": "no"}}</span>
-                                    </div>
-                                </v-card-title>
-                                <v-card-actions>
-                                        <v-btn dark :to="`/cars/${car.id}`" color="deep-orange darken-2">Details</v-btn>
-                                </v-card-actions>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-card>
+        <v-layout v-if="!loading" class="mt-2" >
+            <v-flex xs12 sm10 offset-sm1 >
+                <v-text-field 
+                    v-model="search"
+                    solo
+                    label="Search for a car..."
+                ></v-text-field>
             </v-flex>
+        </v-layout>
+        <v-layout row v-if="!loading" class="mt-2">
+                <v-flex xs12 sm10 offset-sm1>
+                    <v-card>
+                        <v-container fluid grid-list-sm>
+                            <v-layout row wrap>
+                                <v-flex v-for="car in filteredCars" :key="car.id" xs4 class="rounded-card elevation-6 mt-1"> 
+                                    <v-card-media
+                                        class="rounded-image white--text"
+                                        height="200px"
+                                        :src="'http://localhost:8000/storage/images/' + car.image"
+                                        >
+                                        <!-- <v-container fill-height fluid>
+                                            <v-layout fill-height>
+                                            <v-flex xs12 align-end flexbox>
+                                                <span class="headline">{{car.available}}</span>
+                                            </v-flex>
+                                            </v-layout>
+                                        </v-container> -->
+                                    </v-card-media>
+                                    <v-card-title>
+                                        <div>
+                                            <span class="grey--text">{{car.model}}</span><br>
+                                            <span class="grey--text">available: {{car.available == "available" ? "yes": "no"}}</span>
+                                        </div>
+                                    </v-card-title>
+                                    <v-card-actions>
+                                            <v-btn dark :to="`/cars/${car.id}`" color="deep-orange darken-2">Details</v-btn>
+                                    </v-card-actions>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                    </v-card>
+                </v-flex>
+            
     </v-layout>
 </v-container>
 </template>
 
 <script>
 export default {
+
+    data() {
+        return {
+            search: ''
+        }
+    },
     computed: {
-       cars: function () {
-        return this.$store.getters.getCars;
-      },
-      loading () {
-        return this.$store.getters.loading
-      }
+        cars () {
+            return this.$store.getters.getCars;
+        },
+        loading () {
+            return this.$store.getters.loading
+        },
+        filteredCars() {
+            return this.cars.filter((car) => {
+                return car.model.toLowerCase().match(this.search.toLowerCase())
+            })
+        }
     }
 }
 </script>
