@@ -64,9 +64,8 @@
                     </v-card-media>
                     <v-card-title class="ma-0">
                         <div>
-                            <span class="grey--text"> <h3>Model: {{car.model}}</h3></span>
-                            <span class="grey--text">Year: {{car.year}}</span><br>
-                            <span class="grey--text">Available: {{car.available}}</span><br>
+                            <span class="grey--text"> <h3>Model: {{car.model}} /  {{car.year}}</h3></span>
+                            <span class="grey--text">Location: {{car.location}}</span><br>
                             <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
                             <span class="grey--text">Description: {{car.description}}</span><br>
                         </div>

@@ -44,7 +44,7 @@
                                     <v-card-title>
                                         <div>
                                             <span class="grey--text">{{car.model}}</span><br>
-                                            <span class="grey--text">available: {{car.available == "available" ? "yes": "no"}}</span>
+                                            <span class="grey--text">Location: {{car.location}}</span>
                                         </div>
                                     </v-card-title>
                                     <v-card-actions>
