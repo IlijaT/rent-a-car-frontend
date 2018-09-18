@@ -46,14 +46,15 @@
               <v-card-text>
                 <v-form @submit.prevent = "register" method="POST" >
                   <v-text-field prepend-icon="person" v-model= "user.name"  name="name" label="Name" type="text"></v-text-field>
-                  <v-text-field prepend-icon="email" v-model= "user.email" name="email" label="email" type="email"></v-text-field>
-                  <v-text-field id="password" prepend-icon="lock" v-model= "user.password"  name="password" label="Password" type="password"></v-text-field>
+                  <v-text-field prepend-icon="email" v-model= "user.email" type="email" name="email" label="email" ></v-text-field>
+                  <v-text-field id="password" prepend-icon="lock" v-model= "user.password"  name="password" label="Password" :type="show2 ? 'text' : 'password'" @click:append="show2 = !show2" :append-icon="show2 ? 'visibility_off' : 'visibility'"></v-text-field>
                   <v-text-field 
                   id="passwordConfirm" 
                   prepend-icon="lock" 
                   name="password_confirmation" 
                   label="Confirm password" 
-                  type="password"
+                  :type="show1 ? 'text' : 'password'" 
+                  @click:append="show1 = !show1" :append-icon="show1 ? 'visibility_off' : 'visibility'"
                   v-model= "user.password_confirmation"
                   
                   >
@@ -93,6 +94,8 @@ import { auth } from '../../services/authService';
         passwordConfirm: '',
         snackbar: false,
         mode: '',
+        show1: false,
+        show2: false
       }
     },
 

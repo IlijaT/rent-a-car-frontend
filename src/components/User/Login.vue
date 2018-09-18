@@ -45,7 +45,7 @@
               <v-card-text>
                 <v-form @submit.prevent = "login" method="POST">
                   <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text" required></v-text-field>
-                  <v-text-field prepend-icon="lock" v-model="user.password" name="password" label="Password" type="password"></v-text-field>
+                  <v-text-field prepend-icon="lock" v-model="user.password" name="password" label="Password" :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" :append-icon="show1 ? 'visibility_off' : 'visibility'"></v-text-field>
                   <v-btn 
                   type="submit" 
                   dark color="grey darken-1"
@@ -79,6 +79,7 @@ import { auth } from '../../services/authService';
 
         snackbar: false,
         mode: '',
+        show1: false
       }
     },
 
