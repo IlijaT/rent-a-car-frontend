@@ -51,8 +51,8 @@
                         <v-layout fill-height>
                             <v-flex xs12 align-end flexbox>
                                 <span class="headline"> 
-                                    <v-btn dark  class="grey darken-2" large v-if="!canUserEdit" 
-                                        @click="rent()"
+                                    <v-btn dark  class="grey darken-2" large 
+                                        @click="rent(car.id)"
                                         >
                                         <v-icon left>directions</v-icon>
                                         Rent
@@ -65,6 +65,7 @@
                     <v-card-title class="ma-0">
                         <div>
                             <span class="grey--text"> <h3>Model: {{car.model}} /  {{car.year}}</h3></span>
+                            <span class="grey--text">Price: {{car.price}} euros/day</span><br>
                             <span class="grey--text">Location: {{car.location}}</span><br>
                             <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
                             <span class="grey--text">Description: {{car.description}}</span><br>
@@ -105,12 +106,12 @@ export default {
             this.snackbar = false;
             this.$store.dispatch('clearError');
         },
-        rent() {
+        rent(id) {
             if (!this.isUserauthenticated) {
              this.$router.push('/login')
             } else {
                 // ovde treba dodati logiku za rentiranje
-                console.log('rentred')
+              this.$router.push(`/rent-car/${id}`)
             }
         }
     },

@@ -43,8 +43,10 @@
                 <span class="red--text">{{ errors.first('model') }}</span>
                 <v-text-field v-validate="'required'" v-model= "car.registration" prepend-icon="directions_car" name="registration" label="Registration" type="text"></v-text-field>
                 <span class="red--text">{{ errors.first('registration') }}</span>
-                <v-text-field v-validate="'required|numeric'" v-model= "car.year" prepend-icon="access_time" name="year" label="Year" type="text"></v-text-field>
+                <v-text-field v-validate="'required|numeric'" v-model= "car.year" prepend-icon="access_time" name="year" label="Year" type="number"></v-text-field>
                 <span class="red--text">{{ errors.first('year') }}</span>
+                <v-text-field v-validate="'required|numeric'" v-model= "car.price" prepend-icon="euro_symbol" name="price" label="Price per day" type="number"></v-text-field>
+                <span class="red--text">{{ errors.first('price') }}</span>
                 <v-text-field v-validate="'required|numeric'" v-model= "car.consuming" prepend-icon="local_gas_station" name="consuming" label="Consuming" type="text"></v-text-field>
                 <span class="red--text">{{ errors.first('consuming') }}</span>
                 <v-btn
@@ -83,6 +85,7 @@ export default {
         model: '',
         registration: '',
         year: '',
+        price: '',
         consuming: '',
         description: '',
         company_id: '',

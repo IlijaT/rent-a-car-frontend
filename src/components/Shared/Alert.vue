@@ -12,6 +12,9 @@
     <div v-if="text.model" dismissible type="error" @input="onClose" :value="true">
         {{ text.model[0] }}
     </div>
+     <div v-if="text.price" dismissible type="error" @input="onClose" :value="true">
+        {{ text.price[0] }}
+    </div>
     <div v-if="text.consuming" dismissible type="error" @input="onClose" :value="true">
         {{ text.consuming[0] }}
     </div>
@@ -30,6 +33,11 @@
     <div v-if="text.phone" dismissible type="error" @input="onClose" :value="true">
         {{ text.phone[0] }}
     </div>
+    <div v-if="text.message" dismissible type="error" @input="onClose" :value="true">
+        {{ text.message[0] }}
+    </div>
+
+     
  </div>   
 </template>
 

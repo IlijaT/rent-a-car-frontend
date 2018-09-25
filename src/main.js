@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store';
 import axios from 'axios'
+import moment from 'moment'
 import AlertComponent from './components/Shared/Alert.vue';
 import EditCarDialog from './components/Car/Edit/EditCarDialog.vue';
 import EditCompanyDialog from './components/Company/Edit/EditCompanyDialog.vue';
@@ -14,6 +15,7 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 Vue.use(Vuetify);
 Vue.use(router);
+Vue.prototype.moment = moment;
 
 Vue.component('alert-component', AlertComponent)
 Vue.component('edit-car-dialog', EditCarDialog)

@@ -21,6 +21,7 @@ export default class CarService {
         formData.append('description', car.description)
         formData.append('image', car.image)
         formData.append('model', car.model)
+        formData.append('price', car.price)
         formData.append('registration', car.registration)
         formData.append('year', car.year)
         
@@ -68,14 +69,11 @@ export default class CarService {
         formData.append('description', car.description)
         formData.append('image', car.image)
         formData.append('model', car.model)
+        formData.append('price', car.price)
         formData.append('registration', car.registration)
         formData.append('year', car.year)
         formData.append('_method', 'PUT');
-        if(car.available == "available") {
-          formData.append('is_rented', 0)
-        } else {
-          formData.append('is_rented', 1)
-        }
+       
 
     return axios.post(`/cars/${car.id}`, formData)
       .then((response) => {
