@@ -21,6 +21,7 @@ const CarModule = {
         carForUpdate.registration =  payload.registration;
         carForUpdate.year =  payload.year;
         carForUpdate.consuming =  payload.consuming;
+        carForUpdate.price =  payload.price;
         carForUpdate.image =  payload.image;
         carForUpdate.description =  payload.description;
       },

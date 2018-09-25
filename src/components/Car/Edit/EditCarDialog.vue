@@ -18,9 +18,8 @@
                     <v-flex xs-12>
                         <v-card-text>
                             <v-text-field v-model = "editedCar.model" v-validate="'required'" prepend-icon="directions_car" name="editedModel" label="Model" type="text"></v-text-field>
-                            <v-select prepend-icon="directions_car" :items= "items" v-model = "editedCar.available"  label="Available">
-                            </v-select>
                             <v-text-field v-model = "editedCar.registration" v-validate="'required'" prepend-icon="directions_car" name="editedRregistration" label="Registration" type="text"></v-text-field>
+                            <v-text-field v-model= "editedCar.price" v-validate="'required|numeric'"  prepend-icon="euro_symbol" name="price" label="Price per day" type="number"></v-text-field>
                             <v-text-field v-model = "editedCar.year" v-validate="'required|numeric'" prepend-icon="access_time" name="editedYear" label="Year" type="text"></v-text-field>
                             <v-text-field v-model = "editedCar.consuming" v-validate="'required|numeric'" prepend-icon="local_gas_station" name="editedConsuming" label="Consuming" type="text"></v-text-field>
                             <v-btn
@@ -71,20 +70,19 @@ export default {
                 registration: this.car.registration,
                 year: this.car.year,
                 consuming: this.car.consuming,
+                price: this.car.price,
                 image: '',
                 description: this.car.description,
-                available: this.car.available
             },
             imageURL: '',
             dialog: false,
-            items: ['availabale', 'rented']
         }
     },
     methods: {
         onSave () {
             if (this.editedCar.model.trim() == '' || this.editedCar.registration.trim() == '' 
             || this.editedCar.year === null || this.editedCar.consuming === null
-            || this.editedCar.description.trim() == '' || this.editedCar.image == '' || this.editedCar.image == null ) {
+            || this.editedCar.description.trim() == '' || this.editedCar.price === null) {
                 return
             }
             carService.editCar(this.editedCar);

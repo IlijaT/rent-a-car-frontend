@@ -75,10 +75,10 @@ export default new Router({
         
       },
       {
-        path: '/rent-car',
+        path: '/rent-car/:id',
         name: 'rent-car',
         component: RentCar,
-        //beforeEnter: AuthGuard
+        beforeEnter: AuthGuard
         
       },
       

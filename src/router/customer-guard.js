@@ -2,12 +2,12 @@ import store  from '../store'
 
 export default (to, from, next) => {
 
-    if (store.getters.currentUser && store.getters.currentUser[0].role_id === 1) {
+    if (store.getters.currentUser) {
         console.log('user je ulogovan')
         console.log(store.getters.currentUser[0])
         next(); 
     } else {
-        console.log('user nije customer')
+        console.log('user nije customer ili')
         console.log(store.getters.currentUser)
         next('/login');
     }

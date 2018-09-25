@@ -44,6 +44,7 @@
                                     <v-card-title>
                                         <div>
                                             <span class="grey--text">{{car.model}}</span><br>
+                                            <span class="grey--text">Price: {{car.price}} euros/day</span><br>
                                             <span class="grey--text">Location: {{car.location}}</span>
                                         </div>
                                     </v-card-title>
