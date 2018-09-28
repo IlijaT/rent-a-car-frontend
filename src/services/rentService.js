@@ -16,13 +16,29 @@ export default class RentService {
           .then( (response) => {
             // handle success
             store.dispatch('setLoadingFalse');
-            router.push('/')
           })
           .catch(error => {
             store.dispatch('setLoadingFalse');
             store.dispatch('setError', error.data)
           });
       };
+
+    getRentedDays(carId) {
+      store.dispatch('setLoadingTrue');
+        store.dispatch('clearError');
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+        return axios.get(`rent/${carId}`)
+          .then( (response) => {
+            // handle success
+            store.dispatch('setLoadingFalse');
+            return response.data.data;
+          })
+          .catch(error => {
+            console.log(error)
+            store.dispatch('setLoadingFalse');
+            store.dispatch('setError', error.data)
+          });
+    }
     
 }
 
