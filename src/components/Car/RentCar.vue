@@ -49,23 +49,29 @@
                             <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
                             <h2>Choose dates:</h2> 
                         </div>
-                        
+                           {{rentedDays}}
                     </v-card-title>
                     <v-card-actions>
                         <v-layout row wrap>
                             <v-flex xs12 > 
                                 <v-date-picker
+                                :allowed-dates="allowedStartDates"
+                                header-color="orange accent-2"
                                 v-model="date"
+                                min="2018-01-01"
                                 width="250"
                                 class="ma-1"
                                 ></v-date-picker>
                                 <v-date-picker
+                                :allowed-dates="allowedEndDates"
+                                header-color="orange accent-2"
                                 v-model="date2"
                                 width="250"
                                 class="ma-1"
                                 ></v-date-picker>
                             </v-flex> 
                         </v-layout>
+                     
                     </v-card-actions>
                     <v-card-actions>
                         <v-layout row wrap>
@@ -77,6 +83,10 @@
                             <v-btn color="grey darken-1" dark>
                                 <v-icon left>arrow_back</v-icon>
                                 Cancel
+                            </v-btn>
+                            <v-btn color="grey darken-1" dark  @click.native="getRentedDays()">
+                                <v-icon left>arrow_back</v-icon>
+                                rented days
                             </v-btn>
                             </v-flex>  
                         </v-layout>
@@ -110,7 +120,7 @@ export default {
         date2: '',
         startDay: '',
         someDate:'',
-        curentUser: null,
+        rentedDays: [],
         rent: {
             user_id: '',
             car_id: '',
@@ -135,11 +145,34 @@ export default {
             this.rent.end = this.endDateTime;
             rentService.rentCar(this.rent);
         },
+
+        getRentedDays() {
+           rentService.getRentedDays(this.rent.car_id)
+           .then(response =>{
+               if(response === null || response === undefined || response === []){
+                   this.rentedDays = [];
+                   return
+               }
+               let startsAndEnds = [];
+               response.forEach(function (arrayItem) {
+                let start = moment(arrayItem.start);
+                let end = moment( arrayItem.end);
+                while (moment(start).isSameOrBefore(end)) {
+                    startsAndEnds.push(start.format('YYYY-MM-DD'));
+                    start.add(1, 'days');
+                }
+                });
+                this.rentedDays = startsAndEnds;
+            })
+            .catch(error =>{
+                this.rentedDays = [];
+            });
+        },
        
         
         
-        // allowedStartDates: val => parseInt(val.split('-')[2], 10) >= this.startDay,
-        // allowedEndDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+        allowedStartDates: val => this.rentedDays.indexOf(val) === -1,
+        allowedEndDates: val => parseInt(val.split('-')[2], 10) === parseInt(date2.split('-')[2], 10) ,
     },
     computed: {
         startDateTime() {
