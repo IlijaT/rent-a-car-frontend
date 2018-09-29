@@ -39,7 +39,7 @@
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
-                                        <v-btn dark :to="`/cars/${car.id}`" color="deep-orange darken-2">Details</v-btn>
+                                        <v-btn :to="`/cars/${car.id}`" color="orange accent-1">Details</v-btn>
                                 </v-card-actions>
                             </v-flex>
                         </v-layout>

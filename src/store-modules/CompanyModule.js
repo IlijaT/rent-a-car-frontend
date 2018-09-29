@@ -35,10 +35,7 @@ const CompanyModule = {
       },
       updateCompany (context, payload) {
         context.commit('updateCompany', payload);
-      },
-      companyCars(url) {
-        companyService.getCompanyCars(url);
-     }
+      }
     },
     getters: {
       getCompanies: state => {

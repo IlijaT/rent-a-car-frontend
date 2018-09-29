@@ -77,13 +77,6 @@
           <v-layout column align-center justify-center>
             <div class="headline black--text mb-3 text-xl-center">Web development has never been easier</div>
             <em >Rent your favorite car today</em>
-            <v-btn
-              class="pink darken-4 mt-5"
-              dark
-              large
-              :to="'/register'">
-              Rent
-            </v-btn>
           </v-layout>
         </v-parallax>
       </section>

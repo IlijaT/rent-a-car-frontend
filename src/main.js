@@ -15,6 +15,7 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 Vue.use(Vuetify);
 Vue.use(router);
+Vue.use(axios)
 Vue.prototype.moment = moment;
 
 Vue.component('alert-component', AlertComponent)

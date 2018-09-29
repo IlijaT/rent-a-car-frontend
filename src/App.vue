@@ -1,9 +1,12 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      class="orange accent-1"
       v-model="sideNav"
+      mobile-break-point="10240"
       fixed
       app
+      absolute
     >
       <v-list dense>
         <v-list-tile 
@@ -28,13 +31,13 @@
       </v-list>
       
     </v-navigation-drawer>
-    <v-toolbar  dark color="pink darken-4">
-    <v-toolbar-side-icon class="hidden-sm-and-up" @click.native.stop="sideNav = !sideNav"></v-toolbar-side-icon>
+    <v-toolbar  dark color="grey darken-1">
+    <v-toolbar-side-icon class="hidden-md-and-up" @click.native.stop="sideNav = !sideNav"></v-toolbar-side-icon>
     <v-toolbar-title>
-     <router-link to="/" tag="span" style="cursor: pointer"> Rent-a-Car </router-link>
+     <router-link to="/" tag="span"  style="cursor: pointer"> Rent-a-Car </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-xs-only">
+    <v-toolbar-items class="hidden-sm-and-down">
       <v-btn 
         color="grey lighten-2"
         style="font-family: Arial, Helvetica, sans-serif "
@@ -89,9 +92,9 @@ export default {
       if (this.isUserauthenticated && this.$store.getters.currentUser[0].role_id !== 1) {
         menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
-         {icon: 'directions_car', title: 'New-Car', link: '/newcar'},
+        {icon: 'build', title: 'New-Car', link: '/newcar'},
         {icon: 'home', title: 'Companies', link: '/companies'},
-        {icon: 'home', title: 'New-Company', link: '/newCompany'},
+        {icon: 'build', title: 'New-Company', link: '/newCompany'},
        
         ]
       };
