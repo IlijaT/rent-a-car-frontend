@@ -31,19 +31,6 @@ export default class CompanyService {
     return axios.get("companies");
   };
 
-  getCompanyCars (url) {
-    return axios.get("url")
-    .then( (response) => {
-      // handle success
-      store.dispatch('getCompanyCars', response.data);
-      store.dispatch('setLoadingFalse');
-    })
-    .catch(error => {
-      store.dispatch('setLoadingFalse');
-      store.dispatch('setError', error.response.data.errors)
-    });
-  };
-
   deleteCompany(id) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');

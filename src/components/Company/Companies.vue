@@ -37,7 +37,7 @@
                 <v-card class="rounded-card">
                     <v-container fluid grid-list-sm>
                         <v-layout row wrap>
-                            <v-flex v-for="company in companies" :key="company.id" class="rounded-card elevation-6 ma-2"> 
+                            <v-flex xs12 v-for="company in companies" :key="company.id" class="rounded-card elevation-6 ma-2"> 
                                 <v-card-media
                                     class="rounded-image white--text"
                                     height="200px"
@@ -46,7 +46,8 @@
                                       <v-container fill-height fluid>
                                         <v-layout fill-height>
                                         <v-flex xs12 align-end flexbox>
-                                            <span > <h1 class="black--text"> OVDE TREBA STAVITI GOOGLE MAPS </h1></span>
+                                            <span > <h3 class="black--text"> DEMO APP - FAKE GOOGLE MAP</h3></span>
+                                            <span > <h3 class="black--text"> REAL APP - REAL GOOGLE MAP</h3></span>
                                         </v-flex>
                                         </v-layout>
                                     </v-container> 
@@ -60,7 +61,7 @@
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
-                                    <v-btn dark :to="`/companies/${company.id}/cars`" color="deep-orange darken-2">Cars ({{company.numberOfCars}})</v-btn>
+                                    <v-btn :to="`/companies/${company.id}/cars`" color="orange accent-1">Cars ({{company.numberOfCars}})</v-btn>
                                     <span><edit-company-dialog v-if="canUserEdit" :company="company"></edit-company-dialog></span>
                                 </v-card-actions>
                             </v-flex>

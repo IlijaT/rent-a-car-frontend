@@ -1,44 +1,60 @@
 import axios from "axios"
 import store from "../store"
-import router from '../router'
 
 export default class RentService {
 
-    constructor () {
-        axios.defaults.baseURL = "http://localhost:8000/api/";
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+  constructor () {
+    axios.defaults.baseURL = "http://localhost:8000/api/";
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+  };
+
+  rentCar(rentData) {
+    store.dispatch('setLoadingTrue');
+    store.dispatch('clearError');
+    return axios.post('rent', rentData)
+      .then( (response) => {
+        // handle success
+        store.dispatch('setLoadingFalse');
+      })
+      .catch(error => {
+        store.dispatch('setLoadingFalse');
+        store.dispatch('setError', error.data)
+      });
     };
 
-    rentCar(rentData) {
-        store.dispatch('setLoadingTrue');
-        store.dispatch('clearError');
-        return axios.post('rent', rentData)
-          .then( (response) => {
-            // handle success
-            store.dispatch('setLoadingFalse');
-          })
-          .catch(error => {
-            store.dispatch('setLoadingFalse');
-            store.dispatch('setError', error.data)
-          });
-      };
+  getRentedDays(carId) {
+    store.dispatch('setLoadingTrue');
+    store.dispatch('clearError');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+    return axios.get(`rent/${carId}`)
+      .then( (response) => {
+        // handle success
+        store.dispatch('setLoadingFalse');
+        return response.data.data;
+      })
+      .catch(error => {
+        console.log(error)
+        store.dispatch('setLoadingFalse');
+        store.dispatch('setError', error.data)
+      });
+    };
 
-    getRentedDays(carId) {
+    getMaximumPossibleDateForRent(car_id, startDate) {
+      console.log(car_id)
       store.dispatch('setLoadingTrue');
-        store.dispatch('clearError');
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
-        return axios.get(`rent/${carId}`)
-          .then( (response) => {
-            // handle success
-            store.dispatch('setLoadingFalse');
-            return response.data.data;
-          })
-          .catch(error => {
-            console.log(error)
-            store.dispatch('setLoadingFalse');
-            store.dispatch('setError', error.data)
-          });
-    }
+      store.dispatch('clearError');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
+      return axios.get(`next-rent/${car_id}/${startDate}`)
+        .then((response) => {
+          store.dispatch('setLoadingFalse');
+          return response.data;
+        })
+        .catch(error => {
+          store.dispatch('setLoadingFalse');
+          store.dispatch('setError', error.data)
+        });
+
+    };
     
 }
 
