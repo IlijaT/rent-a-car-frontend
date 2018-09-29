@@ -61,7 +61,7 @@
                                     </div>
                                 </v-card-title>
                                 <v-card-actions>
-                                    <v-btn :to="`/companies/${company.id}/cars`" color="orange accent-1">Cars ({{company.numberOfCars}})</v-btn>
+                                    <v-btn :to="`/companies/${company.id}/cars`" class="blue-grey--text" color="orange accent-1">Cars ({{company.numberOfCars}})</v-btn>
                                     <span><edit-company-dialog v-if="canUserEdit" :company="company"></edit-company-dialog></span>
                                 </v-card-actions>
                             </v-flex>

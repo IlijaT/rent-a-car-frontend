@@ -1,7 +1,8 @@
 const HelpModule = {
     state: {
       loading: false,
-      error: null
+      error: null,
+      success: null
     },
     mutations: {
       setLoadingFalse: (state) => {
@@ -15,7 +16,13 @@ const HelpModule = {
       },
       clearError: (state) => {
         state.error = null;
-      }
+      },
+      clearSuccess: (state) => {
+        state.success = null;
+      },
+      setSuccess: (state, payload) => {
+        state.success = payload;
+      },
     },
     actions: {
         setLoadingFalse (context) {
@@ -29,7 +36,13 @@ const HelpModule = {
         },
         clearError (context) {
             context.commit('clearError')
-        }
+        },
+        setSuccess (context, payload) {
+          context.commit('setSuccess', payload)
+        },
+        clearSuccess (context) {
+          context.commit('clearSuccess')
+      },
        
     },
     getters: {
@@ -38,7 +51,10 @@ const HelpModule = {
       },
       loading(state){
         return state.loading;
-      }
+      },
+      success(state){
+        return state.success;
+      },
        
     }
   };

@@ -10,11 +10,13 @@ export default class Auth {
   login(user) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     return axios.post('http://localhost:8000/api/auth/login', user)
         .then((response) => {
           localStorage.setItem('token', response.data.access_token);
           localStorage.setItem('user', JSON.stringify(response.data.user));
           store.dispatch('initUser', response.data.user);
+          store.dispatch('setSuccess', {'message': `Welcome ${response.data.user[0].name} !`} );
           store.dispatch('setLoadingFalse');
         })
         .catch((error) => {
@@ -27,11 +29,13 @@ export default class Auth {
   register(user) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     return axios.post('http://localhost:8000/api/auth/register', user)
         .then((response) => {
           localStorage.setItem('token', response.data.access_token);
           localStorage.setItem('user', JSON.stringify(response.data.user));
           store.dispatch('initUser', response.data.user);
+          store.dispatch('setSuccess', {'message': `Welcome ${response.data.user[0].name} !`} );
           store.dispatch('setLoadingFalse');
           
         })

@@ -75,8 +75,8 @@
       <section>
         <v-parallax src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Cars_for_sale_%286046441241%29.jpg/640px-Cars_for_sale_%286046441241%29.jpg" height="380">
           <v-layout column align-center justify-center>
-            <div class="headline black--text mb-3 text-xl-center">Web development has never been easier</div>
-            <em >Rent your favorite car today</em>
+            <div class="headline mb-3 text-xl-center">Web development has never been easier</div>
+            <em>Rent your favorite car today</em>
           </v-layout>
         </v-parallax>
       </section>
@@ -136,14 +136,20 @@
         </v-container>
       </section>
 
-      <v-footer class="pink darken-4">
+      <v-footer style="height:60px" dark color="grey darken-1">
         <v-layout row wrap align-center>
           <v-flex xs12>
-            <div class= "text-xs-center white--text ml-3">
+            <div class="text-xs-center white--text ml-3">
               Made with
-              <v-icon class="grey lighten-2--text">favorite</v-icon>
-              by <a class="white--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
-              and <a class="white--text" href="https://github.com/IlijaT">Ilija Tatalovic</a>
+              <v-icon class="red--text">favorite</v-icon>
+              by 
+              <a class="orange--text" href="https://laravel.com/docs/5.7" target="_blank">Laravel</a>
+              ,
+              <a class="orange--text" href="https://vuejs.org/" target="_blank">VueJS</a>
+              and
+              <a class="orange--text" href="https://vuetifyjs.com" target="_blank">Vuetify</a>
+              !  
+              <br>Developer: <a class="orange--text" href="https://github.com/IlijaT">Ilija Tatalovic</a>
             </div>
           </v-flex>
         </v-layout>

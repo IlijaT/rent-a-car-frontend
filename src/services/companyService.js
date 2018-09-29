@@ -11,6 +11,7 @@ export default class CompanyService {
   addCompany(company) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
         
@@ -18,6 +19,7 @@ export default class CompanyService {
       .then( (response) => {
         // handle success
         store.dispatch('createCompany', response.data);
+        store.dispatch('setSuccess', {'message': "You successfully created company!"} );
         store.dispatch('setLoadingFalse');
         router.push('/companies')
       })
@@ -34,9 +36,11 @@ export default class CompanyService {
   deleteCompany(id) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     return axios.delete(`companies/${id}`)
       .then((response) => {
         store.dispatch('deleteCompany', id);
+        store.dispatch('setSuccess', {'message': "You successfully deleted company!"} );
         store.dispatch('setLoadingFalse');
         router.push('/')
       })
@@ -49,6 +53,7 @@ export default class CompanyService {
   editCompany(company) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
     axios.defaults.headers.common['Content-Type'] = `multipart/form-data`;
@@ -61,6 +66,7 @@ export default class CompanyService {
     return axios.post(`/companies/${company.id}`, formData)
       .then((response) => {
         store.dispatch('updateCompany', response.data.data);
+        store.dispatch('setSuccess', {'message': "You successfully edited company!"} );
         store.dispatch('setLoadingFalse');
       })
       .catch((error) => {

@@ -63,6 +63,25 @@
     
    </v-toolbar> 
    <main>
+      <v-snackbar class="mb-5" v-if="success"
+        v-model="successSnackbar"
+        auto-height
+        :timeout="timeout"
+        color="green lighten-2"
+        multi-line 
+        top
+        style="top: 50px"
+        absolute
+      >
+      <success-component @dismissed="onDismissed" :text="success"></success-component>
+      <v-btn
+        color="black"
+        flat
+        @click="onDismissed"
+      >
+        Close
+      </v-btn>
+  </v-snackbar>
     <router-view></router-view>
    </main>
   </v-app>
@@ -77,11 +96,18 @@ export default {
     return {
       sideNav: null,
       loggedUser: this.$store.getters.currentUser,
+      successSnackbar: false,
+      timeout:10000
     }
   },
   computed: {
+    success() {
+      if(this.$store.getters.success){
+          this.successSnackbar = true;
+          return this.$store.getters.success;
+        }
+    },
     menuItems () {
-       
       let menuItems = [
         {icon: 'directions_car', title: 'Cars', link: '/cars'},
         {icon: 'home', title: 'Companies', link: '/companies'},
@@ -115,10 +141,14 @@ export default {
 
   },
   methods: {
-     onLogout () {
-        this.$router.push('/')
-        this.$store.dispatch('logout');
-     }
+    onLogout () {
+      this.$router.push('/')
+      this.$store.dispatch('logout');
+    },
+    onDismissed() {
+      this.successSnackbar = false;
+      this.$store.dispatch('clearSuccess');
+    }
   },
 };
 </script>

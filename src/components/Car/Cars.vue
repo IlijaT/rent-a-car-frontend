@@ -13,6 +13,25 @@
              </div>
           </v-flex>
         </v-layout>
+        <v-snackbar class="mb-5" v-if="success"
+            v-model="successSnackbar"
+            auto-height
+            :timeout="timeout"
+            color="green lighten-2"
+            multi-line 
+            top
+            style="top: 50px"
+            absolute
+        >
+            <success-component @dismissed="onDismissed" :text="success"></success-component>
+            <v-btn
+            color="black"
+            flat
+            @click="onDismissed"
+            >
+            Close
+            </v-btn>
+        </v-snackbar>
         <v-layout v-if="!loading" class="mt-2" >
             <v-flex xs12 sm10 offset-sm1 >
                 <v-text-field 
@@ -49,7 +68,7 @@
                                         </div>
                                     </v-card-title>
                                     <v-card-actions>
-                                            <v-btn :to="`/cars/${car.id}`" color="orange accent-1">Details</v-btn>
+                                        <v-btn class="blue-grey--text" block :to="`/cars/${car.id}`" color="orange accent-1">Details</v-btn>
                                     </v-card-actions>
                                 </v-flex>
                             </v-layout>
@@ -66,7 +85,9 @@ export default {
 
     data() {
         return {
-            search: ''
+            search: '',
+            successSnackbar: false,
+            timeout:10000
         }
     },
     computed: {
@@ -80,6 +101,18 @@ export default {
             return this.cars.filter((car) => {
                 return car.model.toLowerCase().match(this.search.toLowerCase())
             })
+        },
+        success() {
+            if(this.$store.getters.success){
+                this.successSnackbar = true;
+                return this.$store.getters.success;
+            }
+        },
+    },
+    methods: {
+        onDismissed() {
+            this.successSnackbar = false;
+            this.$store.dispatch('clearSuccess');
         }
     }
 }

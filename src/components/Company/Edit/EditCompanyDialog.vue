@@ -2,7 +2,7 @@
 <v-container>
     <v-layout row justify-center>
         <v-dialog v-model="dialog" persistent max-width="360" @keydown.esc="cancelFilterModal">
-            <v-btn slot="activator" dark color="grey darken-1">
+            <v-btn slot="activator" class="blue-grey--text lighten-2" color="orange accent-1">
                 <v-icon dark>edit</v-icon>
                 Edit
             </v-btn>
@@ -10,7 +10,11 @@
             <v-container >
                 <v-layout row wrap>
                     <v-flex xs-12>
-                        <v-card-title class="headline">Edit Company</v-card-title>
+                        <v-toolbar dark  color="blue-grey lighten-2">
+                            <v-toolbar-title>
+                                <div class="text-xs-center">Edit company</div>
+                            </v-toolbar-title>
+                        </v-toolbar>
                     </v-flex>
                 </v-layout>
                 <v-divider></v-divider>
@@ -24,12 +28,12 @@
                     </v-flex>
                 </v-layout>
                 <v-divider></v-divider>
-                <v-layout row wrap>
+                 <v-layout row wrap>
                     <v-flex xs-12>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="deep-orange" flat @click.native="dialog = false">Cancel</v-btn>
-                            <v-btn color="deep-orange" flat @click.native="onSave">Save</v-btn>
+                            <v-btn class="blue-grey lighten-2" block dark @click.native="dialog = false">Cancel</v-btn>
+                            <v-btn class="blue-grey lighten-2" block dark @click.native="onSave">Save</v-btn>
                         </v-card-actions>
                     </v-flex>
                 </v-layout>
