@@ -49,7 +49,6 @@
                             <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
                             <h2>Choose dates:</h2> 
                         </div>
-                           {{rentedDays}}
                     </v-card-title>
                     <v-card-actions>
                         <v-layout row wrap>
@@ -57,7 +56,8 @@
                                 <v-date-picker
                                 first-day-of-week=1
                                 :allowed-dates="allowedStartDates"
-                                header-color="orange accent-2"
+                                color="blue-grey lighten-1"
+                                header-color="blue-grey lighten-1 "
                                 v-model="date"
                                 :min="date"
                                 :picker-date.sync="getMaximumPossibleDateForRent"
@@ -66,7 +66,8 @@
                                 ></v-date-picker>
                                 <v-date-picker
                                 first-day-of-week=1
-                                header-color="orange accent-2"
+                                color="blue-grey lighten-1"
+                                header-color="blue-grey lighten-1"
                                 :min="date"
                                 :max="max2"
                                 v-model="date2"
@@ -80,11 +81,11 @@
                     <v-card-actions>
                         <v-layout row wrap>
                             <v-flex xs12 sm6 offset-sm3>  
-                            <v-btn color="grey darken-1" dark @click.native="rentCar()">
+                            <v-btn class="blue-grey--text" color="orange accent-1" @click.native="rentCar()">
                                 <v-icon left>drive_eta</v-icon>
                                 Rent
                             </v-btn>
-                            <v-btn to="/cars" color="grey darken-1" dark>
+                            <v-btn class="blue-grey--text" to="/cars" color="orange accent-1">
                                 <v-icon left>arrow_back</v-icon>
                                 Cancel
                             </v-btn>

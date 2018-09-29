@@ -60,8 +60,9 @@
                   >
                   </v-text-field>
                   <v-btn 
+                    class="blue-grey--text"
                     type="submit" 
-                    dark color="grey darken-1"
+                    color="orange accent-1"
                     :loading="loading"
                     :disabled="loading"
                     >

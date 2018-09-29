@@ -51,7 +51,7 @@
                         <v-layout fill-height>
                             <v-flex xs12 align-end flexbox>
                                 <span class="headline"> 
-                                    <v-btn dark  class="grey darken-2" large 
+                                    <v-btn color="blue-grey" class="white--text" large 
                                         @click="rent(car.id)"
                                         >
                                         <v-icon left>directions</v-icon>
@@ -73,7 +73,7 @@
                     </v-card-title>
                     <v-card-actions v-if="canUserEdit">
                             <span>
-                                <v-btn color="grey darken-1" dark @click="deleteCar(car.id)">
+                                <v-btn large dark class="grey--text darken-4" color="orange accent-1" @click="deleteCar(car.id)">
                                     <v-icon left>delete</v-icon>
                                     Delete
                                 </v-btn>

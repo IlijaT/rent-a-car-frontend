@@ -4,6 +4,7 @@ import store from './store';
 import axios from 'axios'
 import moment from 'moment'
 import AlertComponent from './components/Shared/Alert.vue';
+import SuccessComponent from './components/Shared/Success.vue';
 import EditCarDialog from './components/Car/Edit/EditCarDialog.vue';
 import EditCompanyDialog from './components/Company/Edit/EditCompanyDialog.vue';
 
@@ -19,6 +20,7 @@ Vue.use(axios)
 Vue.prototype.moment = moment;
 
 Vue.component('alert-component', AlertComponent)
+Vue.component('success-component', SuccessComponent)
 Vue.component('edit-car-dialog', EditCarDialog)
 Vue.component('edit-company-dialog', EditCompanyDialog)
 

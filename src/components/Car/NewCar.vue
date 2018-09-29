@@ -13,7 +13,6 @@
             </div>
         </v-flex>
       </v-layout>
-
       <v-snackbar class="mb-5" v-if= "error"
             v-model="snackbar"
             auto-height
@@ -50,8 +49,8 @@
                 <v-text-field v-validate="'required|numeric'" v-model= "car.consuming" prepend-icon="local_gas_station" name="consuming" label="Consuming" type="text"></v-text-field>
                 <span class="red--text">{{ errors.first('consuming') }}</span>
                 <v-btn
-                  color="blue-grey"
-                  class="white--text"
+                  color="orange accent-1"
+                  class="blue-grey--text"
                   @click.native= "pickFile"
                 >
                   Upload image
@@ -66,9 +65,17 @@
                 </v-layout>
                 <v-textarea v-validate="'required'" v-model= "car.description" prepend-icon="description" name="description" label="Car description" type="text"></v-textarea>
                 <span class="red--text">{{ errors.first('description') }}</span>
-                <v-btn :disabled= "!curentUser" type="submit" dark color="grey darken-1">Save</v-btn>
               </v-form>
             </v-card-text>
+            <v-layout row wrap>
+                    <v-flex xs-12>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn block :disabled= "!curentUser" to="/cars" dark color="grey darken-1">Cancel</v-btn>
+                            <v-btn block :disabled= "!curentUser" type="submit" class="blue-grey--text" color="orange accent-1">Save</v-btn>
+                        </v-card-actions>
+                    </v-flex>
+            </v-layout>
           </v-card>
         </v-flex>
       </v-layout>
@@ -104,7 +111,7 @@ export default {
     },
     loading () {
         return this.$store.getters.loading
-      }
+    },
   },
   methods: {
     createCar(){
@@ -136,9 +143,10 @@ export default {
       this.$store.dispatch('clearError');
     }
   },
-  created () {
+  created() {
       this.curentUser = this.$store.getters.currentUser;
-  }
+  },
+
 }
 </script>
 

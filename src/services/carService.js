@@ -11,6 +11,7 @@ export default class CarService {
   addCar(car) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
     axios.defaults.headers.common['Content-Type'] = `multipart/form-data`;
@@ -29,8 +30,9 @@ export default class CarService {
       .then( (response) => {
         // handle success
         store.dispatch('createCar', response.data);
+        store.dispatch('setSuccess', {'message': "You successfully created a car!"} );
         store.dispatch('setLoadingFalse');
-        router.push('/')
+        router.push('/cars')
       })
       .catch(error => {
         store.dispatch('setLoadingFalse');
@@ -46,9 +48,11 @@ export default class CarService {
   deleteCar(id) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     return axios.delete(`cars/${id}`)
       .then((response) => {
         store.dispatch('deleteCar', id);
+        store.dispatch('setSuccess', {'message': "You successfully deleted a car!"} );
         store.dispatch('setLoadingFalse');
         router.push('/')
       })
@@ -61,6 +65,7 @@ export default class CarService {
   editCar(car) {
     store.dispatch('setLoadingTrue');
     store.dispatch('clearError');
+    store.dispatch('clearSuccess');
     axios.defaults.baseURL = "http://localhost:8000/api/";
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;
     axios.defaults.headers.common['Content-Type'] = `multipart/form-data`;
@@ -78,6 +83,7 @@ export default class CarService {
     return axios.post(`/cars/${car.id}`, formData)
       .then((response) => {
         store.dispatch('updateCar', response.data.data);
+        store.dispatch('setSuccess', {'message': "You successfully changed information about car!"} );
         store.dispatch('setLoadingFalse');
       })
       .catch((error) => {
@@ -85,7 +91,6 @@ export default class CarService {
         store.dispatch('setError', error);
       });
   }
-
 }
 
 export const carService = new CarService();

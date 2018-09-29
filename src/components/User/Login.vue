@@ -1,7 +1,7 @@
 <template>
     <v-content>
       <v-container>
-        <v-layout row v-if= "loading">
+        <v-layout row v-if="loading">
           <v-flex xs12 >
              <div class="text-xs-center">
                 <v-progress-circular
@@ -14,13 +14,7 @@
              </div>
           </v-flex>
         </v-layout>
-
-        <!-- <v-layout row v-if= "error">
-          <v-flex xs12 sm6 offset-sm3>
-            <alert-component @dismissed="onDismissed" :text="error"></alert-component>
-          </v-flex>
-        </v-layout> -->
-         <v-snackbar class="mb-5" v-if= "error"
+        <v-snackbar class="mb-5" v-if="error"
             v-model="snackbar"
             auto-height
             color="red"
@@ -38,7 +32,6 @@
                 Close
             </v-btn>
         </v-snackbar>
-
         <v-layout class="mt-5" row v-if= "!loading">
           <v-flex xs12 sm6 offset-sm3>
             <v-card class="rounded-card elevation-6">
@@ -47,8 +40,9 @@
                   <v-text-field prepend-icon="person" v-model="user.email" name="email" label="Email" type="text" required></v-text-field>
                   <v-text-field prepend-icon="lock" v-model="user.password" name="password" label="Password" :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1" :append-icon="show1 ? 'visibility_off' : 'visibility'"></v-text-field>
                   <v-btn 
-                  type="submit" 
-                  dark color="grey darken-1"
+                  type="submit"
+                  class="blue-grey--text"
+                  color="orange accent-1"
                   :loading= "loading"
                   :disabled= "loading"
                   >
@@ -76,13 +70,11 @@ import { auth } from '../../services/authService';
           email: '',
           password: ''
         },
-
         snackbar: false,
         mode: '',
         show1: false
       }
     },
-
     methods: {
       login() {
        auth.login(this.user);
@@ -92,7 +84,6 @@ import { auth } from '../../services/authService';
         this.$store.dispatch('clearError');
       }
     },
-
     computed: {
       error() {
         if(this.$store.getters.error){
@@ -100,7 +91,6 @@ import { auth } from '../../services/authService';
             return this.$store.getters.error;
           }
       },
-
       loading() {
         return this.$store.getters.loading;
       },
@@ -108,15 +98,13 @@ import { auth } from '../../services/authService';
         return this.$store.getters.currentUser;
       },
     },
-
-     watch: {
+    watch: {
       currentUser(value) {
         if (value !== null && value !== undefined) {
           this.$router.push('/');
         }
       }
     }
-    
   }
 </script>
 

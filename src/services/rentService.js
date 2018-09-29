@@ -1,5 +1,6 @@
 import axios from "axios"
 import store from "../store"
+import router from '../router'
 
 export default class RentService {
 
@@ -15,6 +16,8 @@ export default class RentService {
       .then( (response) => {
         // handle success
         store.dispatch('setLoadingFalse');
+        store.dispatch('setSuccess', {'message': "You successfully rented a car! Thank you!"} );
+        router.push('/')
       })
       .catch(error => {
         store.dispatch('setLoadingFalse');
@@ -40,7 +43,6 @@ export default class RentService {
     };
 
     getMaximumPossibleDateForRent(car_id, startDate) {
-      console.log(car_id)
       store.dispatch('setLoadingTrue');
       store.dispatch('clearError');
       axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`;

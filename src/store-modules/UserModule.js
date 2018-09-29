@@ -1,3 +1,5 @@
+import store from "../store"
+
 const UserModule = {
     state: {
       currentUser: null
@@ -26,6 +28,8 @@ const UserModule = {
       logout ( context) {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
+        store.dispatch('clearError');
+        store.dispatch('clearSuccess');
         context.commit('setUser', null);
         
       },

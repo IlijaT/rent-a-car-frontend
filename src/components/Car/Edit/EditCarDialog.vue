@@ -1,8 +1,8 @@
 <template>
-<v-container>
+<v-container xs-12>
     <v-layout row justify-center>
         <v-dialog v-model = "dialog" persistent max-width="360" @keydown.esc="cancelFilterModal">
-            <v-btn slot="activator" dark color="grey darken-1">
+            <v-btn class="grey--text" large slot="activator" color="orange accent-1">
                 <v-icon dark>edit</v-icon>
                 Edit
             </v-btn>
@@ -10,10 +10,13 @@
             <v-container >
                 <v-layout row wrap>
                     <v-flex xs-12>
-                        <v-card-title class="headline">Edit Car</v-card-title>
+                        <v-toolbar dark  color="blue-grey lighten-2">
+                            <v-toolbar-title>
+                                <div class="text-xs-center">Edit car</div>
+                            </v-toolbar-title>
+                        </v-toolbar>
                     </v-flex>
                 </v-layout>
-                <v-divider></v-divider>
                 <v-layout row wrap>
                     <v-flex xs-12>
                         <v-card-text>
@@ -23,8 +26,8 @@
                             <v-text-field v-model = "editedCar.year" v-validate="'required|numeric'" prepend-icon="access_time" name="editedYear" label="Year" type="text"></v-text-field>
                             <v-text-field v-model = "editedCar.consuming" v-validate="'required|numeric'" prepend-icon="local_gas_station" name="editedConsuming" label="Consuming" type="text"></v-text-field>
                             <v-btn
-                                color="blue-grey"
-                                class="white--text"
+                                color="orange accent-1"
+                                class="blue-grey--text"
                                 @click.native="pickFile"
                                 >
                                 Upload image
@@ -42,12 +45,12 @@
                     </v-flex>
                 </v-layout>
                 <v-divider></v-divider>
-                <v-layout row wrap>
+                 <v-layout row wrap>
                     <v-flex xs-12>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="deep-orange" flat @click.native="dialog = false">Cancel</v-btn>
-                            <v-btn color="deep-orange" flat @click.native="onSave">Save</v-btn>
+                            <v-btn color="blue-grey lighten-2" block dark  @click.native="dialog = false">Cancel</v-btn>
+                            <v-btn color="blue-grey lighten-2" block dark  @click.native="onSave">Save</v-btn>
                         </v-card-actions>
                     </v-flex>
                 </v-layout>

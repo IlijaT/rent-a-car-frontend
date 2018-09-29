@@ -45,7 +45,7 @@
                 <span class="red--text">{{ errors.first('address') }}</span>
                 <v-text-field v-validate="'required'" v-model= "company.phone" prepend-icon="phone" name="phone" label="Phone" type="text"></v-text-field>
                 <span class="red--text">{{ errors.first('phone') }}</span>
-                <v-btn :disabled= "!curentUser" type="submit" dark color="grey darken-1">Save</v-btn>
+                <v-btn :disabled= "!curentUser" type="submit" class="blue-grey--text" color="orange accent-1">Save</v-btn>
               </v-form>
             </v-card-text>
           </v-card>
