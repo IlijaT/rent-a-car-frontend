@@ -73,7 +73,7 @@
                     </v-card-title>
                     <v-card-actions v-if="canUserEdit">
                             <span>
-                                <v-btn large dark class="grey--text darken-4" color="orange accent-1" @click="deleteCar(car.id)">
+                                <v-btn large flat @click="deleteCar(car.id)">
                                     <v-icon left>delete</v-icon>
                                     Delete
                                 </v-btn>
