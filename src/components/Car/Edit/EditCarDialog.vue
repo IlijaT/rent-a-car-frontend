@@ -49,7 +49,7 @@
                     <v-flex xs-12>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue-grey lighten-2" block dark  @click.native="dialog = false">Cancel</v-btn>
+                            <v-btn block flat  @click.native="dialog = false">Cancel</v-btn>
                             <v-btn color="blue-grey lighten-2" block dark  @click.native="onSave">Save</v-btn>
                         </v-card-actions>
                     </v-flex>

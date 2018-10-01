@@ -71,7 +71,7 @@
                     <v-flex xs-12>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn block :disabled= "!curentUser" to="/cars" dark color="grey darken-1">Cancel</v-btn>
+                            <v-btn block :disabled= "!curentUser" to="/cars" flat>Cancel</v-btn>
                             <v-btn block :disabled= "!curentUser" type="submit" class="blue-grey--text" color="orange accent-1">Save</v-btn>
                         </v-card-actions>
                     </v-flex>

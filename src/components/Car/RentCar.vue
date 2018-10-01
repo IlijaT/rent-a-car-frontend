@@ -40,59 +40,127 @@
         </v-snackbar>
 
         <v-layout row wrap v-if="!loading">
-            <v-flex xs12 sm10 offset-sm1>
-                <v-card class="rounded-card mt-3 elevation-6">
-                    <v-card-title>
-                        <div>
-                            <h2>Model: {{car.model}} /  {{car.year}}</h2>
-                            <span class="grey--text">Price: {{car.price}} euros/day</span><br>
-                            <span class="grey--text">Fuel consumption: {{car.consuming}}l per 100km</span><br>
-                            <h2>Choose dates:</h2> 
-                        </div>
-                    </v-card-title>
-                    <v-card-actions>
-                        <v-layout row wrap>
-                            <v-flex xs12 > 
-                                <v-date-picker
-                                first-day-of-week=1
-                                :allowed-dates="allowedStartDates"
-                                color="blue-grey lighten-1"
-                                header-color="blue-grey lighten-1 "
-                                v-model="date"
-                                :min="date"
-                                :picker-date.sync="getMaximumPossibleDateForRent"
-                                width="250"
-                                class="ma-1"
-                                ></v-date-picker>
-                                <v-date-picker
-                                first-day-of-week=1
-                                color="blue-grey lighten-1"
-                                header-color="blue-grey lighten-1"
-                                :min="date"
-                                :max="max2"
-                                v-model="date2"
-                                width="250"
-                                class="ma-1"
-                                ></v-date-picker>
-                            </v-flex> 
-                        </v-layout>
-                     
-                    </v-card-actions>
-                    <v-card-actions>
-                        <v-layout row wrap>
-                            <v-flex xs12 sm6 offset-sm3>  
+            <v-flex xs12>
+                <v-stepper v-model="e1">
+                    <v-stepper-header>
+                        <v-stepper-step :complete="e1 > 1" step="1" color="orange accent-1">Choose the first day</v-stepper-step>
+                        <v-divider></v-divider>
+                        <v-stepper-step :complete="e1 > 2" step="2" color="orange accent-1">Choose the last day</v-stepper-step>
+                        <v-divider></v-divider>
+                        <v-stepper-step step="3" color="orange accent-1">Confirm</v-stepper-step>
+                    </v-stepper-header>
+
+                    <v-stepper-items>
+                        <v-stepper-content step="1">
+                            <v-card
+                            class="mb-3 rounded-card"
+                            height="400px"
+                            >
+                                <v-card-title>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 md6 offset-md3>
+                                            <v-date-picker 
+                                                     
+                                                    first-day-of-week=1
+                                                    :allowed-dates="allowedStartDates"
+                                                    color="blue-grey lighten-1"
+                                                    header-color="blue-grey lighten-1"
+                                                    v-model="date"
+                                                    :min="date"
+                                                    :picker-date.sync="getMaximumPossibleDateForRent"
+                                                    class="ma-1 rounded-card elevation-6"
+                                                    >
+                                            </v-date-picker>
+                                        </v-flex> 
+                                    </v-layout>
+                                </v-card-title>
+                            </v-card>
+                            <v-btn flat @click="cancel">
+                                Cancel
+                            </v-btn>
+                            <v-btn
+                            class="blue-grey--text"
+                            color="orange accent-1"
+                            @click="e1 = 2"
+                            >
+                            Continue
+                            </v-btn>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="2">
+                            <v-card
+                            class="mb-3 rounded-card"
+                            height="400px"
+                            >
+                                <v-card-title>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 md6 offset-md3 >
+                                            <v-date-picker
+                                            xs12 
+                                            first-day-of-week=1
+                                            color="blue-grey lighten-1"
+                                            header-color="blue-grey lighten-1"
+                                            :min="date"
+                                            :max="max2"
+                                            v-model="date2"
+                                            class="ma-1 rounded-card elevation-6"
+                                            >
+                                            </v-date-picker>
+                                        </v-flex> 
+                                    </v-layout>
+                                </v-card-title>
+                            </v-card>
+                            <v-btn flat @click="e1 = 1">
+                                <v-icon left>arrow_back</v-icon>
+                                Back
+                            </v-btn>
+                              <v-btn
+                            class="blue-grey--text"
+                            color="orange accent-1"
+                            @click="e1 = 3"
+                            >
+                            Continue
+                            </v-btn>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="3">
+                            <v-card
+                            class="mb-3  rounded-card"
+                            height="400px"
+                            >
+                            <v-layout row wrap xs12>
+                                <v-flex xs6 class="mb-1">
+                                    <v-card-media
+                                    class="rounded-card mb-3"
+                                    height="400px"
+                                    :src="'http://localhost:8000/storage/images/' + car.image"
+                                    >
+                                    </v-card-media>
+                                </v-flex>
+                                <v-card-title xs4 class="mb-1">
+                                    <div>
+                                        <h2>{{car.model}}</h2>
+                                        <h3>Selected dates:</h3>
+                                        {{moment(String(date)).format('DD.MM.YYYY')}} - {{moment(String(date2)).format('DD.MM.YYYY')}} 
+                                        <!-- <span class="grey--text">Rent period: {{date}} -{{date2}} </span> -->
+                                        <!-- <span class="grey--text">Total price: {{rent.total_price}}</span><br>
+                                        <span class="grey--text">Period for rent: {{startDateTime}} - {{endDateTime}}  </span><br> -->
+                                    </div>
+                                </v-card-title>
+                            </v-layout>
+                           
+                            </v-card>
+                            <v-btn flat @click="e1 = 2">
+                                <v-icon left>arrow_back</v-icon>    
+                                Back
+                            </v-btn>
                             <v-btn class="blue-grey--text" color="orange accent-1" @click.native="rentCar()">
                                 <v-icon left>drive_eta</v-icon>
                                 Rent
                             </v-btn>
-                            <v-btn class="blue-grey--text" to="/cars" color="orange accent-1">
-                                <v-icon left>arrow_back</v-icon>
-                                Cancel
-                            </v-btn>
-                            </v-flex>  
-                        </v-layout>
-                    </v-card-actions>
-                </v-card>
+                        </v-stepper-content>
+                    </v-stepper-items>
+                </v-stepper>
             </v-flex>
         </v-layout>
     </v-container>
@@ -134,6 +202,7 @@ export default {
     },
     data () {
       return {
+        e1: 0,
         snackbar: false,
         y: '500',
         x: null,
@@ -176,10 +245,11 @@ export default {
                 }
             );
         },
-
-      
         allowedStartDates(val) {
             return this.rentedDays.indexOf(val) === -1;
+        },
+        cancel() {
+            this.$router.push(`/cars/${this.car.id}`);
         },
         
     },
@@ -200,11 +270,11 @@ export default {
             const endDateTime = endDate + ' ' +  hours + ':' + minutes + ':' + seconds 
             return endDateTime;
         },
-        car () {
+        car() {
             var id = this.$route.params.id;
             return this.$store.getters.getCarById(id);
         },
-        loading () {
+        loading() {
             return this.$store.getters.loading
         },
         
@@ -227,3 +297,15 @@ export default {
     
 }
 </script>
+
+<style scoped>
+.rounded-card{
+    border-radius:10px;
+}
+
+.rounded-image{
+    border-radius:10px 10px 0px 0px;
+    margin: 0px;
+}
+
+</style>
