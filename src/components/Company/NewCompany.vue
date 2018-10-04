@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { companyService } from '../../services/CompanyService';
+import { companyService } from '../../services/companyService';
 
 export default {
   data() {
